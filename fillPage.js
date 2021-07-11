@@ -7,7 +7,6 @@ select = function(obj) {
     IsMouseDown = true;
     ChangeToAvailable = obj.available;
     SelectStop()
-	
 }
 console.log('loaded undies');
 document.addEventListener('W2MFill', function(e) {

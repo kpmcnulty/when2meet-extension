@@ -2,7 +2,7 @@ var when2MeetWeek;
 
 function selectCall(obj){
 	changeCounter++;
-	delayTime=Math.floor(changeCounter/6);
+	delayTime+=2;
 	//console.log(obj);
 	document.dispatchEvent(new CustomEvent('W2MFill', {
               detail: obj
@@ -206,7 +206,7 @@ function fillPage(){
 var params = {};
 var toSetAvailable;
 var changeCounter = 0;
-var delayTime = 1;
+var delayTime = 5;
 
 function looper(){
 			result = getElement(j,i);
