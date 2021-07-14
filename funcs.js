@@ -1,8 +1,8 @@
 var when2MeetWeek;
-
+console.log('LOADED BAKED POTATO');
 function selectCall(obj){
-	changeCounter++;
-	delayTime+=2;
+	//changeCounter++;
+	
 	//console.log(obj);
 	document.dispatchEvent(new CustomEvent('W2MFill', {
               detail: obj
@@ -42,11 +42,14 @@ function epochToIndex(epoch){
 
 async function getWeekly(){
 	var complete = false;
-	console.log('start');
+	console.log("getWeekly");
+	
+	
 	chrome.storage.sync.get(['when2MeetWeek'],function(result){
 		//console.log(result.when2MeetWeek);
 		when2MeetWeek = result.when2MeetWeek;
 		complete = true;
+		
 		if(!when2MeetWeek){
 		when2MeetWeek = new Array();
 		arraySize = 672;
@@ -58,19 +61,38 @@ async function getWeekly(){
 	}
 	});
 	
-	console.log('end');
+	
 }
 
 function setWeekly(){
+	console.log("setWeekly");
 	chrome.storage.sync.set({when2MeetWeek:when2MeetWeek},function(){
-		
+		console.log("JK;LDFSAJL;ADFISJUDEFSWAIO;LPJDESWA;IOHJFDIOPSAHJFI[OADSHDSFIOPDASHJFIOPADHJSIOPFHADSIOPFHIOPDSAHFIOPD");
 		
 	});
-	console.log(when2MeetWeek);
+	//console.log(when2MeetWeek);
 }
-
 function savePage(){
+	console.log("savePage");
 	getWeekly();
+	savePageWaiter();
+	
+}
+function savePageWaiter(){
+	console.log("savePageWaiter");
+	if(!when2MeetWeek){
+		
+		setTimeout(savePageWaiter,20);
+		
+		return;
+	}
+
+	savePageInner();
+
+}
+function savePageInner(){
+	
+	//getWeekly();
 	
 	var i = 0;
 	
@@ -117,6 +139,9 @@ function setAvailable(startRow,startCol,endRow,endCol,available){
 	
 	
 }
+function fillPageGet(){
+	console.log(when2MeetWeek);
+}
 
 function fillPageGet(){
 	getWeekly();
@@ -124,10 +149,8 @@ function fillPageGet(){
 	
 }
 //select = function(fromRow, fromCol, toRow, toCol, available) { FromRow = fromRow; FromCol = fromCol; ToRow = toRow; ToCol = toCol; IsMouseDown = true; ChangeToAvailable = available; SelectStop()}
-var i;
-var j;
-/*
-function fillPage(){
+
+function fillPageInner(){
 	
 	if(!when2MeetWeek){
 		setTimeout(fillPage,100);
@@ -141,15 +164,17 @@ function fillPage(){
 		var j = 0;
 		while(true){
 			result = getElement(j,i);
-			
+			console.log(i,j);
 			
 			
 			if(!result){
+				if(j!=0){
 				params.toRow = j-1;
 				
 				params.available = toSetAvailable;
 				if(params.available == true){
 					selectCall(params);
+				}
 				}
 				break;
 			}
@@ -183,7 +208,7 @@ function fillPage(){
 	
 }
 }
-*/
+
 
 function fillPage(){
 	
@@ -192,21 +217,19 @@ function fillPage(){
 		return;
 	}
 
-	var toSetAvailable;
-	i = 0;
-	j = 0;
-	looper();
+	fillPageInner();
 	
-	
+	document.dispatchEvent(new CustomEvent('phpRequest', {}));
+				
 	
 }
 
 
-
+/*
 var params = {};
 var toSetAvailable;
 var changeCounter = 0;
-var delayTime = 5;
+var delayTime = 1;
 
 function looper(){
 			result = getElement(j,i);
@@ -226,6 +249,10 @@ function looper(){
 					j=0;
 					setTimeout(looper,delayTime);
 					
+				}else{
+					document.dispatchEvent(new CustomEvent('phpRequest', {
+						
+					}));
 				}
 				i++;
 				return;
@@ -239,6 +266,7 @@ function looper(){
 				
 				};
 				toSetAvailable = available;
+				
 			}
 			if(available!=toSetAvailable){
 				params.toRow = j-1;
@@ -255,3 +283,4 @@ function looper(){
 	j++;
 	setTimeout(looper,delayTime);
 }
+*/
