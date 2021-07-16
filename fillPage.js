@@ -76,10 +76,10 @@ select = function(obj) {
 document.addEventListener('W2MFill', function(e) {
 	
     select(e.detail);
-	console.log(e.detail);
+	
 });
 document.addEventListener('phpRequest', function(e) {
 	
     phpReq();
-	console.log();
+	
 });

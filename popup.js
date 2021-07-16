@@ -22,7 +22,7 @@ saveButton.addEventListener("click", async () => {
 		
 		target: {tabId: tab.id},
 		function: function(){
-			//selectCall({toRow: 10,fromRow: 9,toCol: 2,fromCol: 1,available:true});
+			
 			savePage();
 	}});
 	});
@@ -32,8 +32,8 @@ fillButton.addEventListener("click", async () => {
 		
 		target: {tabId: tab.id},
 		function: function(){
-			//selectCall({toRow: 10,fromRow: 9,toCol: 2,fromCol: 1,available:true});
-			fillPageGet();
+			
+			fillPage();
 	}});
 	});
 	
