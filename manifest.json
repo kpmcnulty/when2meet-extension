@@ -2,12 +2,9 @@
   "name": "When2Meet Autofill",
   "description": "Save and fill when2meet.com schedules",
   "version": "1.0",
-  "manifest_version": 3,
-  "background": {
-    "service_worker": "background.js"
-  },
-  "permissions": ["storage", "activeTab", "scripting"],
-  "action": {
+  "manifest_version": 2,
+  "permissions": ["storage", "activeTab"],
+  "browser_action": {
     "default_popup": "popup.html",
 	"default_icon": {
       "16": "/images/16icon.png",
@@ -22,10 +19,7 @@
     "48": "/images/48icon.png",
     "128": "/images/128icon.png"
   },
-  "web_accessible_resources": [{
-        "resources": ["fillPage.js"],
-        "matches": ["*://*.when2meet.com/*"]
-    }],
+  "web_accessible_resources": ["fillPage.js"],
 	"content_scripts": [
         {
           "matches": [

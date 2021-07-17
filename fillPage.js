@@ -63,6 +63,8 @@ function phpReq(){
 	binaryAvailability2=""
 	TimesToToggle2 = new Array();
   }
+  
+  
 select = function(obj) {
     FromRow = obj.fromRow;
     FromCol = obj.fromCol;
@@ -74,9 +76,8 @@ select = function(obj) {
 }
 //console.log('loaded undies');
 document.addEventListener('W2MFill', function(e) {
-	
-    select(e.detail);
-	
+	var obj = JSON.parse(e.detail); 
+    select(obj);	
 });
 document.addEventListener('phpRequest', function(e) {
 	

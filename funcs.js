@@ -1,12 +1,12 @@
 var when2MeetWeek;
+console.log("baked potato");
 
 function selectCall(obj){
 	//changeCounter++;
 	
 	//console.log(obj);
-	document.dispatchEvent(new CustomEvent('W2MFill', {
-              detail: obj
-	  }));
+	var json = JSON.stringify(obj);
+	document.dispatchEvent(new CustomEvent('W2MFill', {detail: json} ));
 }
 
 function getElement(pageRow,pageCol){
@@ -26,7 +26,7 @@ function triggerEvent(el,type){
 
 function isAvailable(div){
 	
-	return(div.style.background=='rgb(51, 153, 0)');
+	return(div.style.backgroundColor=='rgb(51, 153, 0)');
 }
 
 function epochToIndex(epoch){
@@ -41,39 +41,46 @@ function epochToIndex(epoch){
 }
 
 async function getWeekly(){
-	var complete = false;
+	//console.log('getWeekly');
 	when2MeetWeek = null;
 	
-	chrome.storage.sync.get(['when2MeetWeek'],function(result){
+	let gettingItem = browser.storage.local.get("when2MeetWeek");
+	gettingItem.then(function(result){
 		when2MeetWeek = result.when2MeetWeek;
-		complete = true;
+		
+		console.log('callback', when2MeetWeek);
 		
 		if(!when2MeetWeek){
-		when2MeetWeek = new Array();
-		arraySize = 672;
-		while(arraySize--){
-			when2MeetWeek.push(false);
+			when2MeetWeek = new Array();
+			arraySize = 672;
+			while(arraySize--){
+				when2MeetWeek.push(false);
+			}
 		
 		}
 		
-	}
+	}, function(error){
+		console.log('get error');
 	});
+
+	// -> Object { kitten: Object }
+	
+	//console.log('getWeekly done');
 	
 	
 }
 
 function setWeekly(){
-	
-	chrome.storage.sync.set({when2MeetWeek:when2MeetWeek},function(){
-		
-	});
+	browser.storage.local.set({when2MeetWeek:when2MeetWeek});
 }
+
 function savePage(){
 	
 	getWeekly();
 	savePageWaiter();
 	
 }
+
 function savePageWaiter(){
 	
 	if(!when2MeetWeek){
@@ -89,7 +96,7 @@ function savePageWaiter(){
 function savePageInner(){
 	
 	//getWeekly();
-	
+	console.log("before loop", when2MeetWeek);
 	var i = 0;
 	
 	while(true){
@@ -99,14 +106,15 @@ function savePageInner(){
 			//cols
 			
 			result = getElement(i,j);
+			
 			if(!result){
 				break;
 				
 			}
 			
-			
 			var index = epochToIndex(getEpoch(result));	
 			when2MeetWeek[index]=isAvailable(result);
+			console.log(when2MeetWeek[index]);
 			
 			j++;
 		}
@@ -117,6 +125,8 @@ function savePageInner(){
 		
 		i++;
 	}
+	
+	console.log("after loop", when2MeetWeek);
 
 	setWeekly();
 }
@@ -125,12 +135,13 @@ function savePageInner(){
 
 
 function fillPage(){
+	//console.log('fillPage');
 	getWeekly();
 	fillPageWaiter();
 	
 }
 function fillPageWaiter(){
-	
+	//console.log('fillPageWaiter');
 	if(!when2MeetWeek){
 		setTimeout(fillPageWaiter,20);
 		return;
@@ -143,7 +154,7 @@ function fillPageWaiter(){
 	
 }
 function fillPageInner(){
-	
+	//console.log('inner');
 	if(!when2MeetWeek){
 		setTimeout(fillPage,100);
 		return;
@@ -155,6 +166,7 @@ function fillPageInner(){
 	while(true){
 		var j = 0;
 		while(true){
+			console.log(i, j); 
 			result = getElement(j,i);
 			
 			
