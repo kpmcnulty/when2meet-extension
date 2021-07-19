@@ -79,6 +79,7 @@ document.addEventListener('W2MFill', function(e) {
 	var obj = JSON.parse(e.detail); 
     select(obj);	
 });
+
 document.addEventListener('phpRequest', function(e) {
 	
     phpReq();

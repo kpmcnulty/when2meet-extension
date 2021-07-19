@@ -2,17 +2,13 @@ var when2MeetWeek;
 console.log("baked potato");
 
 function selectCall(obj){
-	//changeCounter++;
-	
-	//console.log(obj);
 	var json = JSON.stringify(obj);
 	document.dispatchEvent(new CustomEvent('W2MFill', {detail: json} ));
 }
 
 function getElement(pageRow,pageCol){
-	
-		return document.getElementById('YouGridSlots').querySelector('[data-col="'+pageCol+'"][data-row="'+pageRow+'"]');
-	}
+	return document.getElementById('YouGridSlots').querySelector('[data-col="'+pageCol+'"][data-row="'+pageRow+'"]');
+}
 	
 function getEpoch(div){
 	return div.getAttribute("data-time");
@@ -24,8 +20,7 @@ function triggerEvent(el,type){
         el.dispatchEvent(e);
 }
 
-function isAvailable(div){
-	
+function isAvailable(div){	
 	return(div.style.backgroundColor=='rgb(51, 153, 0)');
 }
 
@@ -44,7 +39,7 @@ async function getWeekly(){
 	//console.log('getWeekly');
 	when2MeetWeek = null;
 	
-	let gettingItem = browser.storage.local.get("when2MeetWeek");
+	let gettingItem = browser.storage.sync.get("when2MeetWeek");
 	gettingItem.then(function(result){
 		when2MeetWeek = result.when2MeetWeek;
 		
@@ -71,7 +66,7 @@ async function getWeekly(){
 }
 
 function setWeekly(){
-	browser.storage.local.set({when2MeetWeek:when2MeetWeek});
+	browser.storage.sync.set({when2MeetWeek:when2MeetWeek});
 }
 
 function savePage(){
